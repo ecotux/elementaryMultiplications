@@ -5,19 +5,12 @@ var keys = {};
 window.addEventListener('keydown',keyPressDown,true);
 window.addEventListener('keyup',keyPressUp,true);
 
-window.addEventListener('keypress',retFalse,true);
-function retFalse(evt) {
-	evt.stopPropagation();
-	evt.preventDefault();
-	evt.returnValue = false;
-	return false;
-}
-
 function keyPressDown(evt){
 	keys[evt.keyCode] = true;
 
 // Disable default behaviour of spacebar
 // http://stackoverflow.com/questions/940180/using-prevent-default-to-take-over-spacebar
+// http://stackoverflow.com/questions/5422770/returning-false-from-click-handler-doesnt-work-in-firefox
 // BUG: It doesn't work with Firefox!!
 	var code;  
 	if( evt.keyCode ) {

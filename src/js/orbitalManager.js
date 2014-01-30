@@ -92,6 +92,10 @@ orbitalManager.prototype.tick = function() {
 	return [passed,broken];
 }
 
+orbitalManager.prototype.getY = function() {
+	return this.yPos;
+}
+
 orbitalManager.prototype.draw = function() {
 	for(var i = 0; i < this.arrow.length; i++) {
 		this.arrow[i].draw();
