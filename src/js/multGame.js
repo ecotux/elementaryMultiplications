@@ -1,5 +1,5 @@
 
-function multGame(canvas,FPS) {
+function multGame(canvas,mouseCtr1,mouseCtr2,FPS) {
 	this.canvas = canvas;
 	this.context2D = this.canvas.getContext('2d');
 
@@ -31,9 +31,8 @@ function multGame(canvas,FPS) {
 
 	// Keyboard Input
 	this.cmd = null;
-	// Mouse Input;
-	this.canvas.addEventListener('click',this.clickEvent.bind(this),false);
-//	document.ondblclick = function() { return false; }
+	this.mouseCtr1 = mouseCtr1;
+	this.mouseCtr2 = mouseCtr2;
 
 	// Bullet Count
 	this.totalBullet = 0;
@@ -45,12 +44,6 @@ function multGame(canvas,FPS) {
 	// Note: "this" in "setInterval" is "window" by default!
 	// http://stackoverflow.com/questions/15498508/unable-to-access-the-object-using-this-this-points-to-window-object
 	this.running = setInterval(this.runGameLoop.bind(this),1000/this.FPS);
-}
-
-multGame.prototype.clickEvent = function(evt) {
-	this.mouseClick = true;
-	this.mouseX = evt.pageX - this.canvas.offsetLeft;
-	this.mouseY = evt.pageY - this.canvas.offsetTop;
 }
 
 multGame.prototype.runGameLoop = function() {
@@ -98,22 +91,16 @@ multGame.prototype.handleInput = function() {
 	if( isKeyPressedTrigger('RIGHT') == true ) {
 		this.cmd = "FIRE";
 	}
-	if(this.mouseClick == true) {
-		this.mouseClick = false;
-		var cannonY = this.orbitalList[this.cannon.getOrbital()].getY();
-		if(this.mouseX < 2*ARROW_WIDTH) {
-			if(this.mouseY > cannonY) {
-				this.cmd = "DOWN";
-			}
-			else {
-				this.cmd = "UP";
-			}
-		}
-		else {
-			this.cmd = "FIRE";
-		}
-//		alert(this.mouseX.toString()+" "+this.mouseY.toString()+" "+cannonY.toString());
+	if( this.mouseCtr1.Trigger('DOWN') == true ) {
+		this.cmd = "DOWN";
 	}
+	if( this.mouseCtr1.Trigger('UP') == true ) {
+		this.cmd = "UP";
+	}
+	if( this.mouseCtr2.Trigger('FIRE') == true ) {
+		this.cmd = "FIRE";
+	}
+//		alert(this.mouseX.toString()+" "+this.mouseY.toString()+" "+cannonY.toString());
 }
 
 multGame.prototype.tick = function() {

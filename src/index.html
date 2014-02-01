@@ -6,6 +6,7 @@
 		<title>Multiplication Table</title>
 		<link href="css/main.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="js/keyboardHandler.js"></script>
+		<script type="text/javascript" src="js/mouseHandler.js"></script>
 		<script type="text/javascript" src="js/textExercise.js"></script>
 		<script type="text/javascript" src="js/cannonSprite.js"></script>
 		<script type="text/javascript" src="js/arrowSprite.js"></script>
@@ -26,9 +27,26 @@
 		<div style="text-align:center;">
 			<button onclick="startgame()">New Attempt</button>
 		<div>
-		<canvas id="gameCanvas" width="320" height="240">
-			Browser not compatible with canvas.
-		</canvas>
+
+		<table cellpadding="0" cellspacing="0" border="0" width="480"><tr>
+		<td width="40">
+			<canvas id="controlCanvas" width="80" height="240">
+				Browser not compatible with canvas.
+			</canvas>
+		</td>
+		<td width="320">
+			<canvas id="gameCanvas" width="320" height="240">
+				Browser not compatible with canvas.
+			</canvas>
+		</td>
+		<td width="40">
+			<canvas id="fireCanvas" width="80" height="240">
+				Browser not compatible with canvas.
+			</canvas>
+		</td>
+		</tr>
+		</table>
+
 		<input type="checkbox" id="sound" checked>Sound on/off</input>
 	</body>
 </html>

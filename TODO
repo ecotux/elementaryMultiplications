@@ -1,7 +1,10 @@
 
+WISHLIST:
 - load all the data once at the beginning
 - disable "newAttempt" button when the game is running or loading
 
+BUGS:
+- "touchstart" and "touchend" are not working on smartphones
 - "preventDefault" is not working on Firefox to disable spacebar behavour
 - "preventDefault" is not working on Chromium to disable double-click/double-tap
 
