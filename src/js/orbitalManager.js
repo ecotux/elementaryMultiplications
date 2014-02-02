@@ -1,7 +1,7 @@
 
 const BULLET_START = 300;
 
-function orbitalManager(canvas, posY) {
+function orbitalManager(canvas, posY, FPS) {
 	this.arrow = new Array();
 	this.bullet = new Array();
 	this.collList = new Array();
@@ -11,25 +11,27 @@ function orbitalManager(canvas, posY) {
 	this.context2D = canvas.getContext('2d');
 	this.canvasWidth = canvas.width;
 	this.canvasHeight = canvas.height;
+
+	this.FPS = FPS;
 }
 
 orbitalManager.prototype.addArrow = function(arrow_width) {
-	this.arrow.push(new arrowSprite( this.canvas, arrow_width, this.yPos ));
+	this.arrow.push(new arrowSprite( this.canvas, arrow_width, this.yPos, this.FPS ));
 }
 
 orbitalManager.prototype.addBullet = function(randNum) {
 	if(this.bullet.length == 0) {
-		this.bullet.push(new bulletSprite(this.canvas, BULLET_START, this.yPos, randNum));
+		this.bullet.push(new bulletSprite(this.canvas, BULLET_START, this.yPos, randNum, this.FPS));
 	} else {
 		var lastBullet = this.bullet[this.bullet.length - 1];
 		if( lastBullet.x <= BULLET_START - lastBullet.MY_WIDTH ) {
-			this.bullet.push(new bulletSprite(this.canvas, BULLET_START, this.yPos, randNum));
+			this.bullet.push(new bulletSprite(this.canvas, BULLET_START, this.yPos, randNum, this.FPS));
 		}
 	}
 }
 
 orbitalManager.prototype.addCollision = function(clX) {
-	this.collList.push(new collAnimation( this.canvas, clX, this.yPos ));
+	this.collList.push(new collAnimation( this.canvas, clX, this.yPos, this.FPS ));
 }
 
 orbitalManager.prototype.tick = function() {

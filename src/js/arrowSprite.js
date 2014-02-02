@@ -1,5 +1,5 @@
 
-function arrowSprite(canvas, posX, posY) {
+function arrowSprite(canvas, posX, posY, FPS) {
 	this.canvas = canvas;
 	this.context2D = canvas.getContext('2d');
 
@@ -14,8 +14,8 @@ function arrowSprite(canvas, posX, posY) {
 	this.referencePixelY = this.MY_HEIGHT/2;
 
 	// SPEED = arrow through the screen in 3 sec
-	this.SHIFTX = 5;
-	this.SHIFTY = 5;
+	this.SHIFTX = this.canvasWidth/(3*FPS);
+	this.SHIFTY = this.canvasHeight/(3*FPS);
 
 	this.x = posX;
 	this.y = posY;

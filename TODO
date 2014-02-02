@@ -1,5 +1,6 @@
 
 WISHLIST:
+- use Time-based animations with "requestAnimationFrame" instead of a fixed FPS
 - load all the data once at the beginning
 - disable "newAttempt" button when the game is running or loading
 

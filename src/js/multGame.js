@@ -25,7 +25,7 @@ function multGame(canvas,mouseCtr1,mouseCtr2,FPS) {
 	var size_orbital = ( this.canvas.height - this.cannon.MY_HEIGHT ) / this.cannon.SHIFTY;
 	var movey = ARROW_HEIGHT;
 	for( var i = 0; i < size_orbital; i++) {
-		this.orbitalList.push(new orbitalManager(this.canvas,movey));
+		this.orbitalList.push(new orbitalManager(this.canvas,movey,this.FPS));
 		movey = movey + this.cannon.SHIFTY;
 	}
 

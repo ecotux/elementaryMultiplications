@@ -10,6 +10,6 @@ function startgame () {
 	var mouseCtr2 = new mouseControl2(fireCanvas);
 
 	var canvas = document.getElementById('gameCanvas');
-	var game = new multGame(canvas,mouseCtr1,mouseCtr2,20);
+	var game = new multGame(canvas,mouseCtr1,mouseCtr2,60);
 }
 

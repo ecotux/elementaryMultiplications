@@ -1,5 +1,5 @@
 
-function bulletSprite(canvas, posX, posY, num) {
+function bulletSprite(canvas, posX, posY, num, FPS) {
 	this.canvas = canvas;
 	this.context2D = canvas.getContext('2d');
 
@@ -12,8 +12,8 @@ function bulletSprite(canvas, posX, posY, num) {
 	this.referencePixelY = this.MY_HEIGHT/2;
 
 	// SPEED = bullet through the screen in 5 seconds
-	this.SHIFTX = 3;
-	this.SHIFTY = 3;
+	this.SHIFTX = this.canvasWidth/(FPS*5);
+	this.SHIFTY = this.canvasHeight/(FPS*5);
 
 	this.x = posX;
 	this.y = posY;

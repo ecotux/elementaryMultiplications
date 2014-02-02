@@ -1,8 +1,6 @@
 
-// SPEED = animation in 1 sec
-const ticksPerFrame = 4; // = FPS/LEN_ANIM
 
-function collAnimation(canvas, posX, posY) {
+function collAnimation(canvas, posX, posY, FPS) {
 	this.canvas = canvas;
 	this.context2D = canvas.getContext('2d');
 
@@ -16,6 +14,9 @@ function collAnimation(canvas, posX, posY) {
 	this.LEN_ANIM = 5;
 	this.referencePixelX = this.MY_WIDTH/2;
 	this.referencePixelY = this.MY_HEIGHT/2;
+
+	// SPEED = animation in 1 sec
+	this.ticksPerFrame = FPS/this.LEN_ANIM;
 
 	this.x = posX;
 	this.y = posY;
@@ -33,7 +34,7 @@ collAnimation.prototype.setRefPixelPosition = function(x, y) {
 collAnimation.prototype.tick = function() {
 	var ret = false;
 	this.speedControl++;
-	if( this.speedControl % ticksPerFrame == 0 ) {
+	if( this.speedControl % this.ticksPerFrame == 0 ) {
 		this.count++;
 		if( this.count > this.LEN_ANIM ) {
 			ret = true;
