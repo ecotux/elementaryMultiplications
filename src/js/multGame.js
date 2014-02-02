@@ -1,5 +1,5 @@
 
-function multGame(canvas,mouseCtr1,mouseCtr2,FPS) {
+function multGame(canvas) {
 	this.canvas = canvas;
 	this.context2D = this.canvas.getContext('2d');
 
@@ -8,14 +8,9 @@ function multGame(canvas,mouseCtr1,mouseCtr2,FPS) {
 	this.canvas.height = 240;
 	this.canvas.width = 320;
 
-	// speed
-	this.FPS = FPS;
-
 	// Exercise Text
-	var n1 = Math.floor(Math.random()*7)+2;
-	var n2 = Math.floor(Math.random()*7)+2;
-	this.exercise = new textExercise(this.canvas,n1,n2);
-	this.numTarget = n1*n2;
+	this.exercise = new textExercise(this.canvas,0,0);
+	this.numTarget = 0;
 
 	// Cannon
 	this.cannon = new cannonSprite(this.canvas);
@@ -25,61 +20,77 @@ function multGame(canvas,mouseCtr1,mouseCtr2,FPS) {
 	var size_orbital = ( this.canvas.height - this.cannon.MY_HEIGHT ) / this.cannon.SHIFTY;
 	var movey = ARROW_HEIGHT;
 	for( var i = 0; i < size_orbital; i++) {
-		this.orbitalList.push(new orbitalManager(this.canvas,movey,this.FPS));
+		this.orbitalList.push(new orbitalManager(this.canvas,movey));
 		movey = movey + this.cannon.SHIFTY;
 	}
 
-	// Keyboard Input
+	this.flush();
+	Mult.gameRun = false;
+}
+
+multGame.prototype.flush = function() {
+
+	// Input Commands
 	this.cmd = null;
-	this.mouseCtr1 = mouseCtr1;
-	this.mouseCtr2 = mouseCtr2;
 
 	// Bullet Count
 	this.totalBullet = 0;
 	// ticks with no bullets
 	this.noBullet = 0;
 
-	this.audioSetting();
+	// new exercise
+	var n1 = Math.floor(Math.random()*7)+2;
+	var n2 = Math.floor(Math.random()*7)+2;
+	this.exercise = new textExercise(this.canvas,n1,n2);
+	this.numTarget = n1*n2;
+
+	for( var i = 0; i < this.orbitalList.length; i++) {
+		this.orbitalList[i].flush();
+	}
+}
+
+multGame.prototype.run = function() {
+	Mult.gameRun = true;
+	document.getElementById('startButton').disabled = Mult.gameRun;
+
+	Mult.audio.play();
 	// Main Loop
 	// Note: "this" in "setInterval" is "window" by default!
 	// http://stackoverflow.com/questions/15498508/unable-to-access-the-object-using-this-this-points-to-window-object
-	this.running = setInterval(this.runGameLoop.bind(this),1000/this.FPS);
+	this.running = setInterval(this.runGameLoop.bind(this),1000/Mult.FPS);
 }
 
 multGame.prototype.runGameLoop = function() {
 	this.handleInput();
 	var retTick = this.tick();
+
+	// render
 	if( retTick == 0 ) {
 		this.draw();
 	}
 	if( retTick == -1 ) {
+		Mult.gameRun = false;
+		document.getElementById('startButton').disabled = Mult.gameRun;
+
 		this.gameOverError();
-		this.runningAudio.pause();
-		if (document.getElementById('sound').checked) {
-			(new Audio("audio/gameover.wav")).play();
-		}
+		Mult.audio.stop();
+		Mult.audio.gameOverError();
 		clearInterval(this.running);
+		this.flush();
 	}
 	if( retTick == 1 ) {
+		Mult.gameRun = false;
+		document.getElementById('startButton').disabled = Mult.gameRun;
+
 		this.gameOverOK();
-		this.runningAudio.pause();
-		if (document.getElementById('sound').checked) {
-			(new Audio("audio/death.wav")).play();
-		}
+		Mult.audio.stop();
+		Mult.audio.gameOverOK();
 		clearInterval(this.running);
+		this.flush();
 	}
 }
 
-multGame.prototype.audioSetting = function() {
-	this.runningAudio = new Audio("audio/versus-1.ogg");
-	this.runningAudio.addEventListener('ended', function() {
-		this.currentTime = 0;
-		this.play();
-	}, false);
-	this.runningAudio.play();
-	this.isAudioRunning = true;
-}
-
+// For Input Handling I use global function/objects
 multGame.prototype.handleInput = function() {
 	this.cmd = "nokey";
 	if( isKeyPressedTrigger('UP') == true ) {
@@ -91,24 +102,23 @@ multGame.prototype.handleInput = function() {
 	if( isKeyPressedTrigger('RIGHT') == true ) {
 		this.cmd = "FIRE";
 	}
-	if( this.mouseCtr1.Trigger('DOWN') == true ) {
+	if( Mult.mouseCtr1.Trigger('DOWN') == true ) {
 		this.cmd = "DOWN";
 	}
-	if( this.mouseCtr1.Trigger('UP') == true ) {
+	if( Mult.mouseCtr1.Trigger('UP') == true ) {
 		this.cmd = "UP";
 	}
-	if( this.mouseCtr2.Trigger('FIRE') == true ) {
+	if( Mult.mouseCtr2.Trigger('FIRE') == true ) {
 		this.cmd = "FIRE";
 	}
-//		alert(this.mouseX.toString()+" "+this.mouseY.toString()+" "+cannonY.toString());
 }
 
 multGame.prototype.tick = function() {
 	// SPEED = get a bullet every 2.5 seconds (in average)
 	// SPEED = max 2 seconds without any bullet
-	var rnd = Math.floor(Math.random()*2.5*this.FPS);
+	var rnd = Math.floor(Math.random()*2.5*Mult.FPS);
 	this.noBullet++;
-	if( this.noBullet % (2*this.FPS) == 0 ) {
+	if( this.noBullet % (2*Mult.FPS) == 0 ) {
 		rnd = 0;
 	}
 	if( rnd == 0 ) {
@@ -142,16 +152,6 @@ multGame.prototype.tick = function() {
     		if( passed == this.numTarget ) {
     			retTick = 1;
 		}
-	}
-
-	// check audio
-	if (document.getElementById('sound').checked && this.isAudioRunning == false) {
-		this.runningAudio.play();
-		this.isAudioRunning = true;
-	}
-	if (!document.getElementById('sound').checked && this.isAudioRunning == true) {
-		this.runningAudio.pause();
-		this.isAudioRunning = false;
 	}
 
 	return retTick;

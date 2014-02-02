@@ -9,8 +9,7 @@ function cannonSprite(canvas) {
 	this.canvasWidth = canvas.width;
 	this.canvasHeight = canvas.height;
 
-	this.cannonImg = new Image();
-	this.cannonImg.src = "images/arciere.png";
+	this.cannonImg = Mult.data.get("CANNON");
 	this.MY_WIDTH = 40;
 	this.MY_HEIGHT = 50;
 	this.referencePixelX = 0;

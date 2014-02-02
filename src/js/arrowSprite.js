@@ -1,21 +1,19 @@
 
-function arrowSprite(canvas, posX, posY, FPS) {
+function arrowSprite(canvas, posX, posY) {
 	this.canvas = canvas;
 	this.context2D = canvas.getContext('2d');
-
 	this.canvasWidth = canvas.width;
 	this.canvasHeight = canvas.height;
 
-	this.arrowImg = new Image();
-	this.arrowImg.src = "images/freccia.png";
+	this.arrowImg = Mult.data.get("ARROW");
 	this.MY_WIDTH = 17;
 	this.MY_HEIGHT = 9;
 	this.referencePixelX = this.MY_WIDTH-1;
 	this.referencePixelY = this.MY_HEIGHT/2;
 
 	// SPEED = arrow through the screen in 3 sec
-	this.SHIFTX = this.canvasWidth/(3*FPS);
-	this.SHIFTY = this.canvasHeight/(3*FPS);
+	this.SHIFTX = this.canvasWidth/(3*Mult.FPS);
+	this.SHIFTY = this.canvasHeight/(3*Mult.FPS);
 
 	this.x = posX;
 	this.y = posY;

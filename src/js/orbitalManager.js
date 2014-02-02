@@ -1,7 +1,7 @@
 
 const BULLET_START = 300;
 
-function orbitalManager(canvas, posY, FPS) {
+function orbitalManager(canvas, posY) {
 	this.arrow = new Array();
 	this.bullet = new Array();
 	this.collList = new Array();
@@ -11,27 +11,25 @@ function orbitalManager(canvas, posY, FPS) {
 	this.context2D = canvas.getContext('2d');
 	this.canvasWidth = canvas.width;
 	this.canvasHeight = canvas.height;
-
-	this.FPS = FPS;
 }
 
 orbitalManager.prototype.addArrow = function(arrow_width) {
-	this.arrow.push(new arrowSprite( this.canvas, arrow_width, this.yPos, this.FPS ));
+	this.arrow.push(new arrowSprite( this.canvas, arrow_width, this.yPos ));
 }
 
 orbitalManager.prototype.addBullet = function(randNum) {
 	if(this.bullet.length == 0) {
-		this.bullet.push(new bulletSprite(this.canvas, BULLET_START, this.yPos, randNum, this.FPS));
+		this.bullet.push(new bulletSprite(this.canvas, BULLET_START, this.yPos, randNum));
 	} else {
 		var lastBullet = this.bullet[this.bullet.length - 1];
 		if( lastBullet.x <= BULLET_START - lastBullet.MY_WIDTH ) {
-			this.bullet.push(new bulletSprite(this.canvas, BULLET_START, this.yPos, randNum, this.FPS));
+			this.bullet.push(new bulletSprite(this.canvas, BULLET_START, this.yPos, randNum));
 		}
 	}
 }
 
 orbitalManager.prototype.addCollision = function(clX) {
-	this.collList.push(new collAnimation( this.canvas, clX, this.yPos, this.FPS ));
+	this.collList.push(new collAnimation( this.canvas, clX, this.yPos ));
 }
 
 orbitalManager.prototype.tick = function() {
@@ -73,9 +71,7 @@ orbitalManager.prototype.tick = function() {
 			this.arrow.shift()
 			this.bullet.shift()
 			this.addCollision(firstBullet.x);
-			if (document.getElementById('sound').checked) {
-				(new Audio("audio/break.wav")).play();
-			}
+			Mult.audio.break();
 		}
 	}
 
@@ -96,6 +92,12 @@ orbitalManager.prototype.tick = function() {
 
 orbitalManager.prototype.getY = function() {
 	return this.yPos;
+}
+
+orbitalManager.prototype.flush = function() {
+	this.arrow.length = 0;
+	this.bullet.length = 0;
+	this.collList.length = 0;
 }
 
 orbitalManager.prototype.draw = function() {

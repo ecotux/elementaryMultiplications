@@ -1,22 +1,20 @@
 
-
-function collAnimation(canvas, posX, posY, FPS) {
+function collAnimation(canvas, posX, posY) {
 	this.canvas = canvas;
 	this.context2D = canvas.getContext('2d');
 
 	this.canvasWidth = canvas.width;
 	this.canvasHeight = canvas.height;
 
-	this.collisionImg = new Image();
-	this.collisionImg.src = "images/collision.png";
+	this.collisionImg = Mult.data.get("COLLISION");
 	this.MY_WIDTH = 15;
 	this.MY_HEIGHT = 15;
 	this.LEN_ANIM = 5;
 	this.referencePixelX = this.MY_WIDTH/2;
 	this.referencePixelY = this.MY_HEIGHT/2;
 
-	// SPEED = animation in 1 sec
-	this.ticksPerFrame = FPS/this.LEN_ANIM;
+	// SPEED = collision animation in 1 sec
+	this.ticksPerFrame = Mult.FPS/this.LEN_ANIM;
 
 	this.x = posX;
 	this.y = posY;
