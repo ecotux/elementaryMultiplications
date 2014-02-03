@@ -12,8 +12,7 @@ function bulletSprite(canvas, posX, posY, num) {
 	this.referencePixelY = this.MY_HEIGHT/2;
 
 	// SPEED = bullet through the screen in 5 seconds
-	this.SHIFTX = this.canvasWidth/(Mult.FPS*5);
-	this.SHIFTY = this.canvasHeight/(Mult.FPS*5);
+	this.bulletTIME = 5;
 
 	this.x = posX;
 	this.y = posY;
@@ -32,6 +31,11 @@ bulletSprite.prototype.tick = function(dir) {
 }
 
 bulletSprite.prototype.moveUp = function() {
+
+	// SPEED = bullet through the screen in 5 seconds
+	this.SHIFTX = this.canvasWidth/(this.bulletTIME*Mult.FPS);
+	this.SHIFTY = this.canvasHeight/(this.bulletTIME*Mult.FPS);
+
 	var ret = true;
 	if( this.y >= this.SHIFTY + this.referencePixelY ) {
 		this.y = this.y - this.SHIFTY;
@@ -42,6 +46,11 @@ bulletSprite.prototype.moveUp = function() {
 }
 	
 bulletSprite.prototype.moveDown = function() {
+
+	// SPEED = bullet through the screen in 5 seconds
+	this.SHIFTX = this.canvasWidth/(this.bulletTIME*Mult.FPS);
+	this.SHIFTY = this.canvasHeight/(this.bulletTIME*Mult.FPS);
+
 	var ret = true;
 	if( this.y <= (this.canvasHeight - this.SHIFTY - this.referencePixelY) ) {
 		this.y = this.y + this.SHIFTY;
@@ -52,6 +61,11 @@ bulletSprite.prototype.moveDown = function() {
 }
 
 bulletSprite.prototype.moveLeft = function() {
+
+	// SPEED = bullet through the screen in 5 seconds
+	this.SHIFTX = this.canvasWidth/(this.bulletTIME*Mult.FPS);
+	this.SHIFTY = this.canvasHeight/(this.bulletTIME*Mult.FPS);
+
 	var ret = true;
 	if( this.x >= this.SHIFTX + this.referencePixelX ) {
 		this.x = this.x - this.SHIFTX;
@@ -62,6 +76,11 @@ bulletSprite.prototype.moveLeft = function() {
 }
 	
 bulletSprite.prototype.moveRight = function() {
+
+	// SPEED = bullet through the screen in 5 seconds
+	this.SHIFTX = this.canvasWidth/(this.bulletTIME*Mult.FPS);
+	this.SHIFTY = this.canvasHeight/(this.bulletTIME*Mult.FPS);
+
 	var ret = true;
 	if( this.x <= (this.canvasWidth - this.SHIFTX - this.MY_WIDTH ) ) {
 		this.x = this.x + this.SHIFTX;

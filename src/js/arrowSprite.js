@@ -12,8 +12,7 @@ function arrowSprite(canvas, posX, posY) {
 	this.referencePixelY = this.MY_HEIGHT/2;
 
 	// SPEED = arrow through the screen in 3 sec
-	this.SHIFTX = this.canvasWidth/(3*Mult.FPS);
-	this.SHIFTY = this.canvasHeight/(3*Mult.FPS);
+	this.arrowTIME = 3;
 
 	this.x = posX;
 	this.y = posY;
@@ -29,6 +28,11 @@ arrowSprite.prototype.tick = function(dir) {
 }
 
 arrowSprite.prototype.moveUp = function() {
+
+	// SPEED = arrow through the screen in 3 sec
+	this.SHIFTX = this.canvasWidth/(this.arrowTIME*Mult.FPS);
+	this.SHIFTY = this.canvasHeight/(this.arrowTIME*Mult.FPS);
+
 	var ret = true;
 	if( this.y >= this.SHIFTY + this.referencePixelY ) {
 		this.y = this.y - this.SHIFTY;
@@ -39,6 +43,11 @@ arrowSprite.prototype.moveUp = function() {
 }
 	
 arrowSprite.prototype.moveDown = function() {
+
+	// SPEED = arrow through the screen in 3 sec
+	this.SHIFTX = this.canvasWidth/(this.arrowTIME*Mult.FPS);
+	this.SHIFTY = this.canvasHeight/(this.arrowTIME*Mult.FPS);
+
 	var ret = true;
 	if( this.y <= (this.canvasHeight - this.MY_HEIGHT - this.SHIFTY - this.referencePixelY) ) {
 		this.y = this.y + this.SHIFTY;
@@ -49,6 +58,11 @@ arrowSprite.prototype.moveDown = function() {
 }
 
 arrowSprite.prototype.moveLeft = function() {
+
+	// SPEED = arrow through the screen in 3 sec
+	this.SHIFTX = this.canvasWidth/(this.arrowTIME*Mult.FPS);
+	this.SHIFTY = this.canvasHeight/(this.arrowTIME*Mult.FPS);
+
 	var ret = true;
 	if( this.x >= this.SHIFTX + this.referencePixelX ) {
 		this.x = this.x - this.SHIFTX;
@@ -59,6 +73,11 @@ arrowSprite.prototype.moveLeft = function() {
 }
 	
 arrowSprite.prototype.moveRight = function() {
+
+	// SPEED = arrow through the screen in 3 sec
+	this.SHIFTX = this.canvasWidth/(this.arrowTIME*Mult.FPS);
+	this.SHIFTY = this.canvasHeight/(this.arrowTIME*Mult.FPS);
+
 	var ret = true;
 	if( this.x <= (this.canvasWidth - this.SHIFTX ) ) {
 		this.x = this.x + this.SHIFTX;

@@ -24,6 +24,11 @@ function multGame(canvas) {
 		movey = movey + this.cannon.SHIFTY;
 	}
 
+	// SPEED = get a bullet every 2.5 seconds (in average)
+	// SPEED = max 2 seconds without any bullet
+	this.averageTIME = 2.5;
+	this.maxTIME = 2;
+
 	this.flush();
 	Mult.gameRun = false;
 }
@@ -125,9 +130,9 @@ multGame.prototype.tick = function(delta) {
 
 	// SPEED = get a bullet every 2.5 seconds (in average)
 	// SPEED = max 2 seconds without any bullet
-	var rnd = Math.floor(Math.random()*2.5*Mult.FPS);
+	var rnd = Math.floor(Math.random()*this.averageTIME*Mult.FPS);
 	this.noBullet++;
-	if( this.noBullet % (2*Mult.FPS) == 0 ) {
+	if( this.noBullet % (this.maxTIME*Mult.FPS) == 0 ) {
 		rnd = 0;
 	}
 	if( rnd == 0 ) {
