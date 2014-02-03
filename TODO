@@ -1,9 +1,0 @@
-
-WISHLIST:
-- use Time-based animations with "requestAnimationFrame" instead of a fixed FPS
-
-BUGS:
-- "touchstart" and "touchend" are not working on tablets and smartphones
-- "preventDefault" is not working on Firefox to disable spacebar behavour
-- "preventDefault" is not working on Chromium to disable double-click/double-tap
-

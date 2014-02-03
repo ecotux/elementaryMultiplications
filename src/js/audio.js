@@ -26,7 +26,7 @@ audioplayer.prototype.stop = function() {
 }
 
 audioplayer.prototype.change = function() {
-	if (this.check.checked) {
+	if (this.check.checked == true && Mult.gameRun == true ) {
 	        this.runningAudio.play();
 	} else {
 	        this.runningAudio.pause();

@@ -52,29 +52,33 @@ preloadData.prototype.get = function(element) {
 	}
 	if(element == "MAINAUDIO") {
 		if(!this.data.mainaudio) {
-			this.data.mainaudio = new Audio("audio/versus-1.ogg");
-			this.data.mainaudio.onload = this.addCounter();
+			this.data.mainaudio = new Audio();
+			this.data.mainaudio.addEventListener('canplaythrough',this.addCounter.bind(this),false);
+			this.data.mainaudio.src = "audio/versus-1.ogg";
 		}
 		return this.data.mainaudio;
 	}
 	if(element == "BREAKSOUND") {
 		if(!this.data.breaksound) {
-			this.data.breaksound = new Audio("audio/break.wav");
-			this.data.breaksound.onload = this.addCounter();
+			this.data.breaksound = new Audio();
+			this.data.breaksound.addEventListener('canplaythrough',this.addCounter.bind(this),false);
+			this.data.breaksound.src = "audio/break.wav";
 		}
 		return this.data.breaksound;
 	}
 	if(element == "ERRORSOUND") {
 		if(!this.data.errorsound) {
-			this.data.errorsound = new Audio("audio/gameover.wav");
-			this.data.errorsound.onload = this.addCounter();
+			this.data.errorsound = new Audio();
+			this.data.errorsound.addEventListener('canplaythrough',this.addCounter.bind(this),false);
+			this.data.errorsound.src = "audio/gameover.wav";
 		}
 		return this.data.errorsound;
 	}
 	if(element == "OKSOUND") {
 		if(!this.data.oksound) {
-			this.data.oksound = new Audio("audio/death.wav");
-			this.data.oksound.onload = this.addCounter();
+			this.data.oksound = new Audio();
+			this.data.oksound.addEventListener('canplaythrough',this.addCounter.bind(this),false);
+			this.data.oksound.src = "audio/death.wav";
 		}
 		return this.data.oksound;
 	}

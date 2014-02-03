@@ -27,9 +27,20 @@ function afterLoad() {
 
 	Mult.gameRun = false;
 	document.getElementById('startButton').disabled = Mult.gameRun;
+
+	startPage(document.getElementById('gameCanvas'));
 }
 
-function startgame () {
+function startPage(canvas) {
+	context2D = canvas.getContext('2d');
+	context2D.fillStyle = "rgb(250,250,250)";
+	context2D.font = "24px Helvetica";
+	context2D.textAlign = "center";
+	context2D.textBaseline = "bottom";
+	context2D.fillText("Start the game!", canvas.width/2, canvas.height/2 );
+}
+
+function startgame() {
 	Mult.game.run();
 }
 

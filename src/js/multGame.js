@@ -54,15 +54,21 @@ multGame.prototype.run = function() {
 	document.getElementById('startButton').disabled = Mult.gameRun;
 
 	Mult.audio.play();
-	// Main Loop
-	// Note: "this" in "setInterval" is "window" by default!
-	// http://stackoverflow.com/questions/15498508/unable-to-access-the-object-using-this-this-points-to-window-object
-	this.running = setInterval(this.runGameLoop.bind(this),1000/Mult.FPS);
+	// Main Loop - Time-based animation
+	this.lastUpdateTime = Date.now();
+	this.runGameLoop();
 }
 
 multGame.prototype.runGameLoop = function() {
+	this.requestID = window.requestAnimationFrame(this.runGameLoop.bind(this));
+	var now = Date.now();
+	this.gameTick(now-this.lastUpdateTime);
+	this.lastUpdateTime = now;
+}
+
+multGame.prototype.gameTick = function(delta) {
 	this.handleInput();
-	var retTick = this.tick();
+	var retTick = this.tick(delta);
 
 	// render
 	if( retTick == 0 ) {
@@ -75,7 +81,7 @@ multGame.prototype.runGameLoop = function() {
 		this.gameOverError();
 		Mult.audio.stop();
 		Mult.audio.gameOverError();
-		clearInterval(this.running);
+		window.cancelAnimationFrame(this.requestID);
 		this.flush();
 	}
 	if( retTick == 1 ) {
@@ -85,7 +91,7 @@ multGame.prototype.runGameLoop = function() {
 		this.gameOverOK();
 		Mult.audio.stop();
 		Mult.audio.gameOverOK();
-		clearInterval(this.running);
+		window.cancelAnimationFrame(this.requestID);
 		this.flush();
 	}
 }
@@ -113,7 +119,10 @@ multGame.prototype.handleInput = function() {
 	}
 }
 
-multGame.prototype.tick = function() {
+multGame.prototype.tick = function(delta) {
+	// current FPS;
+	Mult.FPS = 1000/delta;
+
 	// SPEED = get a bullet every 2.5 seconds (in average)
 	// SPEED = max 2 seconds without any bullet
 	var rnd = Math.floor(Math.random()*2.5*Mult.FPS);
@@ -126,8 +135,8 @@ multGame.prototype.tick = function() {
 		this.totalBullet++;
 		var rndOrbital = Math.floor((Math.random()*this.orbitalList.length));
 		var rndNum = Math.floor(Math.random()*15)-7+this.numTarget;
-	// SPEED = max 15 bullet without the target number
-	if( rndNum <= 0 || rndNum >= 100 || this.totalBullet == 15 ) {
+		// SPEED = max 15 bullet without the target number
+		if( rndNum <= 0 || rndNum >= 100 || this.totalBullet == 15 ) {
 			rndNum = this.numTarget;
 		}
 		this.orbitalList[rndOrbital].addBullet(rndNum);
